@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>菩提 Bodhi — 应无所住而生其心</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap');
+
+  :root {
+    --white: #FEFEFE;
+    --cream: #F7F3EE;
+    --warm-ivory: #F0EBE3;
+    --sand: #E8E0D5;
+    --mist: #D8D0C4;
+    --stone: #B8AFA3;
+    --ink-light: #8A8078;
+    --ink-mid: #5C5550;
+    --ink: #3A3632;
+    --ink-deep: #2A2623;
+    --gold-muted: #C4A882;
+    --gold-soft: #D4BFA0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { font-size: 16px; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Noto Serif TC', serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Paper texture overlay */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    opacity: 0.025;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  .landing {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 3rem 2rem;
+  }
+
+  /* Subtle radial glow behind logo */
+  .landing::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 700px;
+    height: 700px;
+    transform: translate(-50%, -55%);
+    background: radial-gradient(circle, rgba(196,168,130,0.06) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  /* ── Logo ── */
+  .logo-wrap {
+    width: 280px;
+    height: 280px;
+    position: relative;
+    animation: fadeUp 2s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .logo-orb {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: radial-gradient(circle at 45% 40%,
+      rgba(255,255,255,0.95) 0%,
+      rgba(247,243,238,0.9) 30%,
+      rgba(240,235,227,0.7) 55%,
+      rgba(232,224,213,0.4) 75%,
+      transparent 100%
+    );
+    position: absolute;
+    inset: 0;
+    animation: orbGlow 4s 0.5s ease-in-out infinite;
+  }
+
+  .logo-svg {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 1;
+  }
+
+  .petal-soft {
+    fill-opacity: 0;
+    stroke: none;
+    animation: petalReveal 1.6s ease forwards;
+  }
+  .petal-soft-1 { animation-delay: 0.8s; }
+  .petal-soft-2 { animation-delay: 1.0s; }
+  .petal-soft-3 { animation-delay: 1.2s; }
+  .petal-soft-4 { animation-delay: 1.4s; }
+  .petal-soft-5 { animation-delay: 1.6s; }
+  .petal-soft-6 { animation-delay: 1.1s; }
+
+  .petal-center {
+    opacity: 0;
+    animation: fadeIn 1.2s 2s ease forwards;
+  }
+
+  /* ── Brand name ── */
+  .brand {
+    margin-top: 2rem;
+    text-align: center;
+    animation: fadeUp 2s 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .brand h1 {
+    font-size: 2.4rem;
+    font-weight: 300;
+    letter-spacing: 1rem;
+    color: var(--ink-deep);
+    margin-left: 1rem;
+  }
+
+  .brand .tagline {
+    font-size: 0.75rem;
+    font-weight: 300;
+    letter-spacing: 0.5rem;
+    color: var(--ink-light);
+    margin-top: 0.6rem;
+    margin-left: 0.5rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+  }
+
+  /* ── Divider ── */
+  .divider {
+    width: 40px;
+    height: 1px;
+    background: var(--mist);
+    margin: 2.5rem auto;
+    animation: fadeUp 2s 1s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  /* ── Quote ── */
+  .quote {
+    text-align: center;
+    animation: fadeUp 2s 1.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+    max-width: 600px;
+  }
+
+  .quote p {
+    font-size: 1.35rem;
+    font-weight: 200;
+    letter-spacing: 0.5rem;
+    line-height: 2.2;
+    color: var(--ink-mid);
+    margin-left: 0.5rem;
+  }
+
+  .quote .source {
+    font-size: 0.7rem;
+    font-weight: 300;
+    letter-spacing: 0.3rem;
+    color: var(--stone);
+    margin-top: 1.2rem;
+    margin-left: 0.3rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+  }
+
+  /* ── Animations ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+
+  @keyframes petalReveal {
+    from { fill-opacity: 0; }
+    to { fill-opacity: 1; }
+  }
+
+  @keyframes orbGlow {
+    0%, 100% { opacity: 0.85; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.02); }
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 768px) {
+    .logo-wrap { width: 220px; height: 220px; }
+    .brand h1 { font-size: 1.8rem; letter-spacing: 0.7rem; }
+    .quote p { font-size: 1.1rem; letter-spacing: 0.35rem; }
+  }
+
+  @media (max-width: 480px) {
+    .logo-wrap { width: 180px; height: 180px; }
+    .brand h1 { font-size: 1.5rem; letter-spacing: 0.5rem; }
+    .quote p { font-size: 0.95rem; letter-spacing: 0.25rem; }
+  }
+</style>
+</head>
+<body>
+
+<section class="landing">
+
+  <!-- Logo: Luminous Lotus Orb -->
+  <div class="logo-wrap">
+    <div class="logo-orb"></div>
+    <svg class="logo-svg" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="petalGrad1" cx="50%" cy="30%" r="60%">
+          <stop offset="0%" stop-color="#FEFEFE" stop-opacity="0.95"/>
+          <stop offset="40%" stop-color="#F0EBE3" stop-opacity="0.7"/>
+          <stop offset="100%" stop-color="#D8D0C4" stop-opacity="0.3"/>
+        </radialGradient>
+        <radialGradient id="petalGrad2" cx="40%" cy="35%" r="65%">
+          <stop offset="0%" stop-color="#FEFEFE" stop-opacity="0.9"/>
+          <stop offset="50%" stop-color="#E8E0D5" stop-opacity="0.55"/>
+          <stop offset="100%" stop-color="#D8D0C4" stop-opacity="0.2"/>
+        </radialGradient>
+        <radialGradient id="petalGrad3" cx="60%" cy="35%" r="65%">
+          <stop offset="0%" stop-color="#FEFEFE" stop-opacity="0.9"/>
+          <stop offset="50%" stop-color="#E8E0D5" stop-opacity="0.55"/>
+          <stop offset="100%" stop-color="#D8D0C4" stop-opacity="0.2"/>
+        </radialGradient>
+        <radialGradient id="centerGrad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#C4A882" stop-opacity="0.5"/>
+          <stop offset="60%" stop-color="#D8D0C4" stop-opacity="0.25"/>
+          <stop offset="100%" stop-color="#D8D0C4" stop-opacity="0"/>
+        </radialGradient>
+        <filter id="softBlur">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="2.5"/>
+        </filter>
+        <filter id="tinyBlur">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="1"/>
+        </filter>
+      </defs>
+
+      <!-- Center petal (top, tallest) -->
+      <path class="petal-soft petal-soft-1" fill="url(#petalGrad1)"
+            d="M 150 170 C 138 148, 135 120, 150 80 C 165 120, 162 148, 150 170 Z" />
+
+      <!-- Inner left petal -->
+      <path class="petal-soft petal-soft-2" fill="url(#petalGrad2)"
+            d="M 148 172 C 132 155, 118 130, 120 100 C 135 118, 145 148, 148 172 Z" />
+
+      <!-- Inner right petal -->
+      <path class="petal-soft petal-soft-3" fill="url(#petalGrad3)"
+            d="M 152 172 C 155 148, 165 118, 180 100 C 182 130, 168 155, 152 172 Z" />
+
+      <!-- Outer left petal -->
+      <path class="petal-soft petal-soft-4" fill="url(#petalGrad2)"
+            d="M 145 175 C 125 162, 105 142, 95 115 C 112 128, 138 158, 145 175 Z" />
+
+      <!-- Outer right petal -->
+      <path class="petal-soft petal-soft-5" fill="url(#petalGrad3)"
+            d="M 155 175 C 162 158, 188 128, 205 115 C 195 142, 175 162, 155 175 Z" />
+
+      <!-- Bottom accent petals (subtle) -->
+      <path class="petal-soft petal-soft-6" fill="url(#petalGrad2)" filter="url(#tinyBlur)"
+            d="M 142 178 C 118 170, 92 155, 82 135 C 100 145, 130 168, 142 178 Z" />
+      <path class="petal-soft petal-soft-6" fill="url(#petalGrad3)" filter="url(#tinyBlur)"
+            d="M 158 178 C 170 168, 200 145, 218 135 C 208 155, 182 170, 158 178 Z" />
+
+      <!-- Soft glow at flower center -->
+      <circle class="petal-center" cx="150" cy="135" r="18" fill="url(#centerGrad)" filter="url(#softBlur)" />
+      <circle class="petal-center" cx="150" cy="135" r="4" fill="#C4A882" opacity="0.4" />
+    </svg>
+  </div>
+
+  <!-- Brand name -->
+  <div class="brand">
+    <h1>菩 提</h1>
+    <p class="tagline">Bodhi</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Quote -->
+  <div class="quote">
+    <p>应无所住而生其心</p>
+    <p class="source">— Diamond Sutra</p>
+  </div>
+
+</section>
+
+</body>
+</html>
